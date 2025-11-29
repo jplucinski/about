@@ -1,24 +1,11 @@
 ---
 title: 4 steps to create chat bot for your API
-description: This is an example idea to get you started with Decap CMS.
+description: Old post about LLM and API integration.
 pubDate: 2025-01-15
 author: Jędrzej Pluciński
 ---
 
-This is a sample idea. You can edit this content using Decap CMS or by editing the markdown file directly.
+This article walks through building a conversational interface for REST APIs using large language models. It covers prompt engineering, function calling, API integration, and response handling—demonstrating how to bridge natural language queries with structured API endpoints.
 
-## Getting Started
-
-To start creating ideas:
-
-1. Use the Decap CMS admin interface at `/admin`
-2. Or create new `.md` files in the `src/content/ideas/` directory
-
-## Features
-
-- **Markdown Support**: Write your ideas in Markdown
-- **Rich Content**: Support for code blocks, images, and more
-- **Easy Management**: Use Decap CMS to manage your content visually
-
-Happy reading!
+[Read the full article on Medium →](https://medium.com/@jedrzejplucinski/4-steps-to-create-chat-bot-for-your-api-e563c897ef85)
 
