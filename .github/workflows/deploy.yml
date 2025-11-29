@@ -1,0 +1,108 @@
+name: Build, Deploy & Release
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types:
+      - closed
+    branches:
+      - main
+
+jobs:
+  build-deploy-release:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.pull_request.merged == true)
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build Astro site
+        run: npm run build
+
+      - name: Get current version
+        id: get_version
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+      - name: Generate new version
+        id: semver
+        run: |
+          CURRENT_VERSION="${{ steps.get_version.outputs.version }}"
+          IFS='.' read -ra VERSION_PARTS <<< "$CURRENT_VERSION"
+          MAJOR="${VERSION_PARTS[0]}"
+          MINOR="${VERSION_PARTS[1]}"
+          PATCH="${VERSION_PARTS[2]}"
+          
+          # Increment patch version
+          NEW_PATCH=$((PATCH + 1))
+          NEW_VERSION="$MAJOR.$MINOR.$NEW_PATCH"
+          
+          echo "new_version=$NEW_VERSION" >> $GITHUB_OUTPUT
+          echo "New version: $NEW_VERSION"
+
+      - name: Update package.json version
+        run: |
+          NEW_VERSION="${{ steps.semver.outputs.new_version }}"
+          npm version $NEW_VERSION --no-git-tag-version
+
+      - name: Commit version bump
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add package.json
+          git commit -m "chore: bump version to ${{ steps.semver.outputs.new_version }}" || echo "No changes to commit"
+          git push || echo "Nothing to push"
+
+      - name: Deploy to SEOhost via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./dist/
+          server-dir: /public_html/
+          dangerous-clean-slate: false
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/node_modules/**
+            .env
+
+      - name: Create GitHub Release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: v${{ steps.semver.outputs.new_version }}
+          release_name: Release v${{ steps.semver.outputs.new_version }}
+          body: |
+            ## Changes in this Release
+            - Deployed to production
+            - Build artifacts uploaded to SEOhost via FTP
+            
+            ### Commit Details
+            ${{ github.event.head_commit.message }}
+          draft: false
+          prerelease: false
+
+      - name: Deployment Summary
+        run: |
+          echo "✅ Deployment successful!"
+          echo "📦 Version: v${{ steps.semver.outputs.new_version }}"
+          echo "🚀 Deployed to SEOhost"
+          echo "🏷️ Tag created: v${{ steps.semver.outputs.new_version }}"
