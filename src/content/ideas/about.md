@@ -10,8 +10,9 @@ tags:
 category: About
 draft: false
 ---
+Welcome to my corner of the web. This site serves as both a portfolio and a digital garden where I share ideas, projects, and experiences from my journey in software engineering.
 
-This is the about page for my personal website. You can edit this content using Decap CMS or by editing the markdown file directly.
+Built with a focus on simplicity and performance, every aspect of this site reflects my belief that great technology should be both powerful and accessible. The minimal earth-tone design isn't just aesthetic—it's intentional, creating a calm space that puts content first.
 
 ## Tech Stack
 
