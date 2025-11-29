@@ -1,0 +1,47 @@
+{
+  "name": "jplucinski.dev",
+  "image": "mcr.microsoft.com/devcontainers/typescript-node:20",
+  "features": {
+    "ghcr.io/devcontainers/features/git:1": {},
+    "ghcr.io/devcontainers/features/github-cli:1": {}
+  },
+  "postCreateCommand": "npm install",
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "editor.formatOnSave": true,
+        "files.insertFinalNewline": true,
+        "[astro]": {
+          "editor.defaultFormatter": "astro-build.astro-vscode"
+        },
+        "[typescript]": {
+          "editor.defaultFormatter": "esbenp.prettier-vscode"
+        },
+        "[json]": {
+          "editor.defaultFormatter": "esbenp.prettier-vscode"
+        }
+      },
+      "extensions": [
+        "astro-build.astro-vscode",
+        "csstools.postcss",
+        "esbenp.prettier-vscode",
+        "bradlc.vscode-tailwindcss",
+        "dbaeumer.vscode-eslint"
+      ]
+    }
+  },
+  "forwardPorts": [
+    4321,
+    8081
+  ],
+  "portsAttributes": {
+    "4321": {
+      "label": "Astro Dev Server"
+    },
+    "8081": {
+      "label": "Decap CMS"
+    }
+  },
+  "remoteUser": "node"
+}
+

@@ -1,0 +1,83 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  pubDate: Date;
+  slug: string;
+  tags?: string[];
+  category?: string;
+  featuredImage?: string;
+}
+
+const { title, description, slug, tags, category, featuredImage } = Astro.props;
+---
+
+<a
+  href={`/ideas/${slug}`}
+  class="block group border-b border-slate-200 pb-6 hover:border-slate-900 transition-colors"
+>
+  <div class="flex flex-col">
+    {
+      featuredImage && (
+        <div class="mb-4 aspect-video w-full overflow-hidden rounded bg-slate-100">
+          <img
+            src={featuredImage}
+            alt={title}
+            class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+          />
+        </div>
+      )
+    }
+
+    {
+      category && (
+        <div class="mb-2">
+          <span class="text-[10px] font-mono uppercase tracking-wider text-slate-500">
+            {category}
+          </span>
+        </div>
+      )
+    }
+
+    <h3
+      class="text-lg md:text-xl font-display font-semibold mb-2 text-slate-900 group-hover:text-slate-600 transition-colors line-clamp-2"
+    >
+      {title}
+    </h3>
+    <p
+      class="text-sm md:text-base text-slate-600 mb-4 font-light line-clamp-3 leading-relaxed"
+    >
+      {description}
+    </p>
+
+    <div class="flex items-center justify-between mt-auto">
+      <span
+        class="text-xs text-slate-500 font-light inline-flex items-center gap-2 group-hover:text-slate-900 transition-colors"
+      >
+        Read more
+        <svg
+          class="w-3 h-3 transition-transform group-hover:translate-x-1"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="1.5"
+            d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+        </svg>
+      </span>
+
+      {
+        tags && tags.length > 0 && (
+          <div class="flex gap-2">
+            {tags.slice(0, 3).map((tag) => (
+              <span class="text-[10px] text-slate-400 font-light">#{tag}</span>
+            ))}
+          </div>
+        )
+      }
+    </div>
+  </div>
+</a>

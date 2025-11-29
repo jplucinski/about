@@ -1,0 +1,145 @@
+local_backend: true
+backend:
+  name: github
+  repo: jplucinski/about
+  branch: main
+  base_url: https://decapbridge.com
+  auth_endpoint: /api/v1/auth
+
+media_folder: "public/images/uploads"
+public_folder: "/images/uploads"
+
+publish_mode: editorial_workflow
+
+collections:
+  - name: "ideas"
+    label: "Ideas"
+    folder: "src/content/ideas"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Description", name: "description", widget: "text" }
+      - { label: "Publish Date", name: "pubDate", widget: "datetime" }
+      - { label: "Author", name: "author", widget: "string", default: "J�drzej Pluci�ski" }
+      - { label: "Featured Image", name: "featuredImage", widget: "image", required: false }
+      - { label: "Category", name: "category", widget: "select", options: ["Development", "Design", "Technology", "Personal"], required: false }
+      - { label: "Tags", name: "tags", widget: "list", required: false }
+      - { label: "Draft", name: "draft", widget: "boolean", default: false }
+      - { label: "Body", name: "body", widget: "markdown" }
+      - label: "SEO"
+        name: "seo"
+        widget: "object"
+        required: false
+        fields:
+          - { label: "Title", name: "title", widget: "string", required: false }
+          - { label: "Description", name: "description", widget: "text", required: false }
+          - { label: "Keywords", name: "keywords", widget: "list", required: false }
+          - { label: "OG Image", name: "ogImage", widget: "image", required: false }
+
+  - name: "resume"
+    label: "Resume"
+    files:
+      - name: "data"
+        label: "Resume Data"
+        file: "src/content/resume/data.json"
+        fields:
+          - label: "Skills"
+            name: "skills"
+            widget: "object"
+            fields:
+              - { label: "Frontend", name: "frontend", widget: "list" }
+              - { label: "Backend", name: "backend", widget: "list" }
+              - { label: "Tools", name: "tools", widget: "list" }
+              - { label: "Soft Skills", name: "softSkills", widget: "list", required: false }
+          - label: "Certifications"
+            name: "certifications"
+            widget: "list"
+            fields:
+              - { label: "Name", name: "name", widget: "string" }
+              - { label: "Issuer", name: "issuer", widget: "string" }
+              - { label: "Date", name: "date", widget: "datetime" }
+              - { label: "URL", name: "url", widget: "string", required: false }
+          - label: "Education"
+            name: "education"
+            widget: "list"
+            fields:
+              - { label: "Degree", name: "degree", widget: "string" }
+              - { label: "Institution", name: "institution", widget: "string" }
+              - { label: "Location", name: "location", widget: "string" }
+              - { label: "Start Date", name: "startDate", widget: "datetime" }
+              - { label: "End Date", name: "endDate", widget: "datetime", required: false }
+              - { label: "Description", name: "description", widget: "text", required: false }
+          - label: "Languages"
+            name: "languages"
+            widget: "list"
+            fields:
+              - { label: "Language", name: "language", widget: "string" }
+              - { label: "Proficiency", name: "proficiency", widget: "string" }
+
+  - name: "site"
+    label: "Site Settings"
+    files:
+      - name: "settings"
+        label: "Global Settings"
+        file: "src/content/site/settings.json"
+        fields:
+          - { label: "Site Name", name: "name", widget: "string" }
+          - { label: "Tagline", name: "tagline", widget: "string" }
+          - { label: "Description", name: "description", widget: "text" }
+          - { label: "Email", name: "email", widget: "string" }
+          - { label: "Location", name: "location", widget: "string", required: false }
+          - label: "Social Media"
+            name: "social"
+            widget: "object"
+            fields:
+              - { label: "GitHub", name: "github", widget: "string", required: false }
+              - { label: "LinkedIn", name: "linkedin", widget: "string", required: false }
+              - { label: "Twitter", name: "twitter", widget: "string", required: false }
+          - label: "SEO Defaults"
+            name: "seo"
+            widget: "object"
+            fields:
+              - { label: "Default Description", name: "defaultDescription", widget: "text" }
+              - { label: "Default Keywords", name: "defaultKeywords", widget: "list", required: false }
+          - { label: "Copyright Notice", name: "copyright", widget: "string", required: false }
+
+  - name: "pages"
+    label: "Pages"
+    files:
+      - name: "home"
+        label: "Home Page"
+        file: "src/content/pages/home.md"
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - { label: "Hero Title", name: "heroTitle", widget: "string" }
+          - { label: "Hero Subtitle", name: "heroSubtitle", widget: "string" }
+          - { label: "Hero Description", name: "heroDescription", widget: "text" }
+          - { label: "CTA Primary", name: "ctaPrimary", widget: "string" }
+          - { label: "CTA Primary Link", name: "ctaPrimaryLink", widget: "string" }
+          - { label: "CTA Secondary", name: "ctaSecondary", widget: "string" }
+          - { label: "CTA Secondary Link", name: "ctaSecondaryLink", widget: "string" }
+          - { label: "Featured Title", name: "featuredTitle", widget: "string" }
+          - { label: "Featured Subtitle", name: "featuredSubtitle", widget: "string" }
+          - { label: "Featured Description", name: "featuredDescription", widget: "text" }
+      - name: "about"
+        label: "About Page"
+        file: "src/content/pages/about.md"
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - { label: "Professional Summary", name: "professionalSummary", widget: "text" }
+          - { label: "Bio", name: "bio", widget: "list" }
+          - { label: "Frontend Skills", name: "frontendSkills", widget: "list" }
+          - { label: "Backend Skills", name: "backendSkills", widget: "list" }
+          - label: "Experience"
+            name: "experience"
+            widget: "list"
+            fields:
+              - { label: "Period", name: "period", widget: "string" }
+              - { label: "Company", name: "company", widget: "string" }
+              - { label: "Position", name: "position", widget: "string" }
+              - { label: "Technologies", name: "technologies", widget: "string", required: false }
+              - { label: "Responsibilities", name: "responsibilities", widget: "list" }
+          - { label: "Education", name: "education", widget: "text" }
+          - { label: "Languages", name: "languages", widget: "text" }
+          - { label: "Contact Text", name: "contactText", widget: "text" }

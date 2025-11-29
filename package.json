@@ -1,0 +1,24 @@
+{
+  "name": "jplucinski-dev",
+  "type": "module",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "dec": "decap-server --port 8081 --allowed-hosts 4321"
+  },
+  "dependencies": {
+    "@tinacms/cli": "^1.12.2",
+    "astro": "^5.15.7",
+    "tinacms": "^1.6.7"
+  },
+  "devDependencies": {
+    "@astrojs/tailwind": "^5.1.4",
+    "@types/node": "^22.10.2",
+    "decap-server": "^3.4.0",
+    "tailwindcss": "^3.4.17",
+    "typescript": "^5.7.2"
+  }
+}

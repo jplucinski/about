@@ -1,0 +1,120 @@
+---
+import Layout from "../components/Layout.astro";
+import IdeaCard from "../components/IdeaCard.astro";
+import StructuredData from "../components/StructuredData.astro";
+import { getCollection, getEntry } from "astro:content";
+
+const ideas = (await getCollection("ideas")).slice(0, 3);
+
+const homeContent = await getEntry("pages", "home").catch(() => null);
+const siteSettings = await getEntry("site", "settings").catch(() => null);
+
+const homeData: any = homeContent?.data ?? {};
+const siteData: any = siteSettings?.data ?? {};
+
+const heroTitle = homeData.heroTitle || "Jędrzej Pluciński";
+const heroSubtitle =
+  homeData.heroSubtitle ||
+  "Crafting digital experiences with code & creativity";
+const heroDescription =
+  homeData.heroDescription ||
+  "Building modern web applications with passion for clean code, innovative solutions, and exceptional user experiences.";
+const tagline = siteData.tagline || "Senior Software Developer";
+const ctaPrimary = homeData.ctaPrimary || "Learn More";
+const ctaSecondary = homeData.ctaSecondary || "View Ideas";
+const ctaPrimaryLink = homeData.ctaPrimaryLink || "/about";
+const ctaSecondaryLink = homeData.ctaSecondaryLink || "/ideas";
+const featuredTitle = homeData.featuredTitle || "Latest Ideas";
+const featuredSubtitle = homeData.featuredSubtitle || "Latest Thoughts";
+const featuredDescription =
+  homeData.featuredDescription ||
+  "Insights, tutorials, and reflections on software development";
+
+const siteUrl = Astro.site?.href || "https://jplucinski.dev";
+const pageDescription = siteData.description || "Senior Software Developer";
+const social = siteData.social || {};
+---
+
+<Layout title="Home" description={pageDescription}>
+  <StructuredData
+    type="WebSite"
+    data={{
+      name: siteData.name || "jplucinski.dev",
+      description: pageDescription,
+    }}
+  />
+  <div class="min-h-screen bg-white">
+    <section
+      class="relative min-h-[40vh] md:min-h-[50vh] flex flex-col md:flex-row"
+    >
+      <div
+        class="flex-1 flex items-center justify-center md:justify-end md:pr-8 lg:pr-12 px-6 py-8 md:py-0 border-b md:border-b-0 md:border-r border-clay"
+      >
+        <div class="max-w-md">
+          <h1 class="heading-display text-left mb-2">
+            <span class="block">{heroTitle}</span>
+          </h1>
+        </div>
+      </div>
+
+      <div
+        class="flex-1 flex items-center justify-center md:justify-start md:pl-8 lg:pl-12 px-6 py-8 md:py-0"
+      >
+        <div class="max-w-md">
+          <p
+            class="text-lg md:text-xl lg:text-2xl text-charcoal leading-relaxed font-light mb-6"
+          >
+            {heroSubtitle}
+          </p>
+          <div class="flex flex-col gap-3 md:gap-4">
+            <a
+              href={ctaPrimaryLink}
+              class="inline-flex items-center justify-center bg-ink text-white px-6 py-3 text-xs font-semibold uppercase tracking-[0.2em] rounded-md transition hover:bg-terracotta shadow-sm"
+            >
+              {ctaPrimary}
+            </a>
+            <a
+              href={ctaSecondaryLink}
+              class="inline-flex items-center justify-center border border-ink px-6 py-3 text-xs font-semibold uppercase tracking-[0.2em] text-ink rounded-md transition hover:bg-sand"
+            >
+              {ctaSecondary}
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {
+      ideas.length > 0 && (
+        <section class="container mx-auto px-6 py-12 md:py-16">
+          <div class="max-w-4xl mx-auto">
+            <div class="mb-8 md:mb-12 text-center">
+              <h2 class="heading-2 mb-3 text-ink">{featuredTitle}</h2>
+              <p class="text-base md:text-lg text-stone max-w-2xl mx-auto font-light leading-relaxed">
+                {featuredDescription}
+              </p>
+            </div>
+            <div class="space-y-6 md:space-y-8">
+              {ideas.map((idea, index) => (
+                <IdeaCard
+                  title={idea.data.title}
+                  description={idea.data.description}
+                  pubDate={idea.data.pubDate}
+                  slug={idea.slug}
+                />
+              ))}
+            </div>
+            <div class="text-center mt-8">
+              <a
+                href="/ideas"
+                class="inline-block text-base md:text-lg text-ink font-serif border-b border-ink pb-1 hover:text-terracotta hover:border-terracotta transition-colors"
+              >
+                View all ideas
+              </a>
+            </div>
+          </div>
+        </section>
+      )
+    }
+  </div>
+</Layout>

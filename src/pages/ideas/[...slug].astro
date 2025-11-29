@@ -1,0 +1,126 @@
+---
+import Layout from '../../components/Layout.astro';
+import ScrollAnimation from '../../components/ScrollAnimation.astro';
+import StructuredData from '../../components/StructuredData.astro';
+import { getCollection } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+
+export async function getStaticPaths() {
+  const ideas = await getCollection('ideas');
+  return ideas.map((idea) => ({
+    params: { slug: idea.slug },
+    props: { idea },
+  }));
+}
+
+interface Props {
+  idea: CollectionEntry<'ideas'>;
+}
+
+const { idea } = Astro.props;
+const { Content } = await idea.render();
+const formattedDate = new Intl.DateTimeFormat('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+}).format(idea.data.pubDate);
+
+const siteUrl = Astro.site?.href || 'https://jplucinski.dev';
+const ideaUrl = `${siteUrl}/ideas/${idea.slug}`;
+---
+
+<Layout 
+  title={idea.data.title} 
+  description={idea.data.description}
+  type="article"
+  url={ideaUrl}
+>
+  <StructuredData 
+    type="BlogPosting" 
+    data={{
+      headline: idea.data.title,
+      description: idea.data.description,
+      datePublished: idea.data.pubDate.toISOString(),
+      dateModified: idea.data.pubDate.toISOString(),
+      author: idea.data.author,
+      url: ideaUrl,
+    }} 
+  />
+  <article class="min-h-screen bg-white">
+    <section class="container mx-auto px-6 py-16 md:py-24 border-b border-clay">
+      <div class="max-w-4xl mx-auto">
+        <ScrollAnimation direction="up" delay="0">
+          <a href="/ideas" class="inline-flex items-center gap-2 text-sm text-stone hover:text-ink transition-colors mb-12 font-light">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 19l-7-7 7-7" />
+            </svg>
+            Back to Ideas
+          </a>
+        </ScrollAnimation>
+        <ScrollAnimation direction="up" delay="100">
+          <header>
+            <h1 class="heading-display mb-8">{idea.data.title}</h1>
+            <p class="text-xl md:text-2xl text-charcoal mb-6 font-light leading-relaxed">{idea.data.description}</p>
+          </header>
+        </ScrollAnimation>
+      </div>
+    </section>
+
+    <section class="container mx-auto px-6 py-16 md:py-24">
+      <div class="max-w-3xl mx-auto">
+        <div class="prose prose-lg max-w-none">
+          <Content />
+        </div>
+      </div>
+    </section>
+  </article>
+</Layout>
+
+<style>
+  .prose {
+    @apply text-charcoal;
+  }
+  .prose h2 {
+    @apply text-xl md:text-2xl lg:text-3xl font-display font-bold leading-tight text-ink mt-12 mb-6;
+  }
+  .prose h3 {
+    @apply text-lg md:text-xl font-display font-semibold text-ink mt-8 mb-4;
+  }
+  .prose p {
+    @apply text-sm md:text-base leading-relaxed text-charcoal mb-6;
+  }
+  .prose ul, .prose ol {
+    @apply mb-6 space-y-2 ml-6;
+  }
+  .prose li {
+    @apply text-sm md:text-base leading-relaxed text-charcoal;
+  }
+  .prose a {
+    @apply text-ink border-b border-clay hover:border-terracotta hover:text-terracotta transition-colors duration-200 pb-0.5;
+  }
+  .prose strong {
+    @apply text-ink font-semibold;
+  }
+  .prose em {
+    @apply italic;
+  }
+  .prose blockquote {
+    @apply border-l-4 border-terracotta pl-6 italic text-stone my-6;
+  }
+  .prose code {
+    @apply bg-sand px-2 py-1 rounded text-sm font-mono text-ink;
+  }
+  .prose pre {
+    @apply bg-ink text-sand p-6 rounded-lg overflow-x-auto mb-6;
+  }
+  .prose pre code {
+    @apply bg-transparent p-0 text-sand;
+  }
+  .prose img {
+    @apply rounded-lg my-8;
+  }
+  .prose hr {
+    @apply border-clay my-12;
+  }
+</style>
+

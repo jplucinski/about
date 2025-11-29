@@ -1,0 +1,53 @@
+---
+interface Props {
+  class?: string;
+  delay?: string;
+  direction?: 'up' | 'down' | 'left' | 'right' | 'fade' | 'scale' | 'rotate';
+}
+
+const { class: className = '', delay = '0', direction = 'up' } = Astro.props;
+const dataDirection = direction;
+---
+
+<div 
+  class={`scroll-animate ${className}`}
+  data-animate={dataDirection}
+  data-delay={delay}
+>
+  <slot />
+</div>
+
+<script>
+  const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('animate-in');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, observerOptions);
+
+  document.querySelectorAll('.scroll-animate').forEach(el => {
+    const delay = el.getAttribute('data-delay') || '0';
+    el.style.setProperty('--animation-delay', `${delay}ms`);
+    observer.observe(el);
+  });
+</script>
+
+<style>
+  .scroll-animate {
+    opacity: 0;
+    transition: opacity 0.3s ease-out;
+    transition-delay: var(--animation-delay, 0ms);
+  }
+
+  .scroll-animate.animate-in {
+    opacity: 1;
+  }
+</style>
+

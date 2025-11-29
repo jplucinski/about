@@ -1,0 +1,55 @@
+---
+import Header from "./Header.astro";
+import Footer from "./Footer.astro";
+import SEO from "./SEO.astro";
+import "../styles/global.css";
+
+interface Props {
+  title: string;
+  description?: string;
+  image?: string;
+  url?: string;
+  type?: string;
+  keywords?: string[];
+  noindex?: boolean;
+}
+
+const {
+  title,
+  description = "Senior Software Developer",
+  image,
+  url = Astro.url.pathname,
+  type = "website",
+  keywords = [],
+  noindex = false,
+} = Astro.props;
+
+const fullTitle = title.includes("|") ? title : `${title} | jplucinski.dev`;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{fullTitle}</title>
+    <SEO
+      title={fullTitle}
+      description={description}
+      image={image}
+      url={url}
+      type={type}
+      keywords={keywords}
+      noindex={noindex}
+    />
+  </head>
+  <body class="bg-white text-ink antialiased">
+    <Header />
+    <main class="min-h-screen">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

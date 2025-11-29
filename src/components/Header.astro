@@ -1,0 +1,145 @@
+---
+const currentPath = Astro.url.pathname;
+const isHome = currentPath === "/";
+
+const navItems = [
+  { label: "Home", href: "/" },
+  { label: "About", href: "/about" },
+  { label: "Ideas", href: "/ideas" },
+];
+
+const isActive = (href: string) => {
+  if (href === "/") {
+    return currentPath === "/";
+  }
+  return currentPath.startsWith(href);
+};
+---
+
+<header
+  class="sticky top-0 z-50 border-b border-clay bg-white backdrop-blur-md transition-all duration-300"
+>
+  <div class="container mx-auto px-6 py-4 md:py-5">
+    <div class="flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <a
+          href="/"
+          class="group flex items-center gap-3"
+        >
+          <div class="flex flex-col">
+            <span class="text-sm font-mono uppercase tracking-[0.25em] text-ink font-semibold group-hover:text-terracotta transition-colors">
+              calm software
+            </span>
+            <span class="text-[10px] font-mono uppercase tracking-[0.3em] text-stone -mt-0.5">
+              direction
+            </span>
+          </div>
+        </a>
+      </div>
+
+      <div class="hidden md:flex items-center gap-10">
+        <nav>
+          <ul class="flex items-center gap-10">
+            {
+              navItems.map((item) => {
+                const active = isActive(item.href);
+                return (
+                  <li>
+                    <a
+                      href={item.href}
+                      aria-current={active ? "page" : undefined}
+                      class={`relative text-sm font-medium tracking-wide transition-all duration-200 group ${
+                        active
+                          ? "text-ink"
+                          : "text-stone hover:text-ink"
+                      }`}
+                    >
+                      <span class="relative z-10">{item.label}</span>
+                      <span class={`absolute bottom-0 left-0 w-full h-0.5 bg-terracotta transition-transform duration-300 ${active ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'}`}></span>
+                    </a>
+                  </li>
+                );
+              })
+            }
+          </ul>
+        </nav>
+        
+        <div class="flex items-center gap-2 px-3 py-1.5 bg-sand rounded-full">
+          <svg class="w-3 h-3 text-terracotta" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+          </svg>
+          <span class="text-[10px] font-mono uppercase tracking-wider text-stone">
+            Poznań · Remote
+          </span>
+        </div>
+      </div>
+
+      <button
+        id="primary-menu-button"
+        class="md:hidden flex flex-col gap-1.5 w-8 h-8 items-center justify-center group"
+        aria-label="Toggle menu"
+        aria-expanded="false"
+        aria-controls="primary-mobile-menu"
+      >
+        <span class="w-6 h-0.5 bg-ink transition-all group-hover:bg-terracotta"></span>
+        <span class="w-6 h-0.5 bg-ink transition-all group-hover:bg-terracotta"></span>
+        <span class="w-6 h-0.5 bg-ink transition-all group-hover:bg-terracotta"></span>
+      </button>
+    </div>
+
+    <div
+      id="primary-mobile-menu"
+      class="hidden md:hidden overflow-hidden transition-all duration-300 ease-in-out"
+    >
+      <div class="mt-6 pt-6 border-t border-clay">
+        <ul class="flex flex-col gap-4">
+          {
+            navItems.map((item) => {
+              const active = isActive(item.href);
+              return (
+                <li>
+                  <a
+                    href={item.href}
+                    class={`block text-lg font-serif ${active ? "text-terracotta" : "text-ink hover:text-terracotta"} transition-colors`}
+                  >
+                    {item.label}
+                  </a>
+                </li>
+              );
+            })
+          }
+        </ul>
+        <div class="mt-6 pt-4 border-t border-clay flex items-center gap-2">
+          <svg class="w-3 h-3 text-terracotta" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+          </svg>
+          <span class="text-xs font-mono uppercase tracking-wider text-stone">
+            Poznań · Remote
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<script>
+  const menuButton = document.getElementById("primary-menu-button");
+  const mobileMenu = document.getElementById("primary-mobile-menu");
+
+  if (menuButton && mobileMenu) {
+    mobileMenu.classList.add("hidden");
+
+    menuButton.addEventListener("click", () => {
+      mobileMenu.classList.toggle("hidden");
+      const expanded = menuButton.getAttribute("aria-expanded") === "true";
+      menuButton.setAttribute("aria-expanded", (!expanded).toString());
+    });
+
+    mobileMenu.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", () => {
+        mobileMenu.classList.add("hidden");
+        menuButton.setAttribute("aria-expanded", "false");
+      });
+    });
+  }
+</script>

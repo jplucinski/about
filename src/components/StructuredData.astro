@@ -1,0 +1,92 @@
+---
+interface Props {
+  type: 'Person' | 'WebSite' | 'BlogPosting' | 'BreadcrumbList';
+  data: Record<string, any>;
+}
+
+const { type, data } = Astro.props;
+const siteUrl = Astro.site?.href || 'https://jplucinski.dev';
+
+let schema: Record<string, any> = {
+  '@context': 'https://schema.org',
+  '@type': type,
+};
+
+switch (type) {
+  case 'Person':
+    schema = {
+      ...schema,
+      name: data.name || 'Jędrzej Pluciński',
+      jobTitle: data.jobTitle || 'Senior Software Developer',
+      description: data.description,
+      url: data.url || siteUrl,
+      image: data.image || `${siteUrl}/avatar.jpg`,
+      email: data.email,
+      sameAs: data.sameAs || [],
+    };
+    break;
+
+  case 'WebSite':
+    schema = {
+      ...schema,
+      name: data.name || 'jplucinski.dev',
+      url: siteUrl,
+      description: data.description,
+      publisher: {
+        '@type': 'Person',
+        name: 'Jędrzej Pluciński',
+      },
+      potentialAction: {
+        '@type': 'SearchAction',
+        target: {
+          '@type': 'EntryPoint',
+          urlTemplate: `${siteUrl}/blog?q={search_term_string}`,
+        },
+        'query-input': 'required name=search_term_string',
+      },
+    };
+    break;
+
+  case 'BlogPosting':
+    schema = {
+      ...schema,
+      headline: data.headline,
+      description: data.description,
+      image: data.image || `${siteUrl}/og-image.jpg`,
+      datePublished: data.datePublished,
+      dateModified: data.dateModified || data.datePublished,
+      author: {
+        '@type': 'Person',
+        name: data.author || 'Jędrzej Pluciński',
+        url: siteUrl,
+      },
+      publisher: {
+        '@type': 'Person',
+        name: 'Jędrzej Pluciński',
+        url: siteUrl,
+      },
+      mainEntityOfPage: {
+        '@type': 'WebPage',
+        '@id': data.url || siteUrl,
+      },
+    };
+    break;
+
+  case 'BreadcrumbList':
+    schema = {
+      ...schema,
+      itemListElement: (data.items || []).map((item: any, index: number) => ({
+        '@type': 'ListItem',
+        position: index + 1,
+        name: item.name,
+        item: item.url || `${siteUrl}${item.path}`,
+      })),
+    };
+    break;
+}
+
+const jsonLd = JSON.stringify(schema);
+---
+
+<script type="application/ld+json" set:html={jsonLd} />
+

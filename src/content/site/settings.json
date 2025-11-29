@@ -1,0 +1,18 @@
+{
+  "name": "jplucinski.dev",
+  "tagline": "Senior Software Developer",
+  "description": "Senior Java Developer with over a decade of experience in automotive, fintech, and game development. Skilled in designing scalable systems, optimizing performance, and leading teams.",
+  "email": "jedrzejplucinski@gmail.com",
+  "location": "Poznań, Poland",
+  "social": {
+    "github": "https://github.com/jplucinski",
+    "linkedin": "https://www.linkedin.com/in/jedrzej-plucinski",
+    "twitter": "https://medium.com/@jedrzejplucinski"
+  },
+  "seo": {
+    "defaultDescription": "Jędrzej Pluciński - Senior Java Developer with over a decade of experience in automotive, fintech, and game development. Skilled in designing scalable systems, optimizing performance, and leading teams.",
+    "defaultKeywords": ["software developer", "java developer", "backend development", "spring", "microservices", "fintech", "automotive", "scalable systems"]
+  },
+  "copyright": "© 2025 Jędrzej Pluciński. All rights reserved."
+}
+
