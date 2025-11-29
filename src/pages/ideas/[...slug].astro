@@ -68,7 +68,7 @@ const ideaUrl = `${siteUrl}/ideas/${idea.slug}`;
 
     <section class="container mx-auto px-6 py-16 md:py-24">
       <div class="max-w-3xl mx-auto">
-        <div class="prose prose-lg max-w-none">
+        <div class="prose max-w-none">
           <Content />
         </div>
       </div>
@@ -76,51 +76,129 @@ const ideaUrl = `${siteUrl}/ideas/${idea.slug}`;
   </article>
 </Layout>
 
-<style>
+<style is:global>
   .prose {
-    @apply text-charcoal;
+    font-family: 'Inter', sans-serif;
+    color: #333333;
   }
+  
   .prose h2 {
-    @apply text-xl md:text-2xl lg:text-3xl font-display font-bold leading-tight text-ink mt-12 mb-6;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.875rem;
+    font-weight: 700;
+    color: #191919;
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+    line-height: 1.2;
   }
+  
+  .prose h2:first-child {
+    margin-top: 0;
+  }
+  
   .prose h3 {
-    @apply text-lg md:text-xl font-display font-semibold text-ink mt-8 mb-4;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #191919;
+    margin-top: 2.5rem;
+    margin-bottom: 0.75rem;
+    line-height: 1.3;
   }
+  
   .prose p {
-    @apply text-sm md:text-base leading-relaxed text-charcoal mb-6;
+    font-size: 1.25rem;
+    line-height: 1.8;
+    color: #333333;
+    margin-bottom: 1.5rem;
+    font-weight: 300;
   }
-  .prose ul, .prose ol {
-    @apply mb-6 space-y-2 ml-6;
+  
+  .prose ul {
+    margin-bottom: 1.5rem;
+    list-style: none;
+    padding-left: 0;
   }
-  .prose li {
-    @apply text-sm md:text-base leading-relaxed text-charcoal;
+  
+  .prose ul li {
+    font-size: 1.25rem;
+    line-height: 1.8;
+    color: #333333;
+    font-weight: 300;
+    padding-left: 1.5rem;
+    position: relative;
+    margin-bottom: 0.5rem;
   }
-  .prose a {
-    @apply text-ink border-b border-clay hover:border-terracotta hover:text-terracotta transition-colors duration-200 pb-0.5;
+  
+  .prose ul li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: #d0684f;
+    font-weight: 400;
   }
+  
   .prose strong {
-    @apply text-ink font-semibold;
+    color: #191919;
+    font-weight: 600;
   }
+  
+  .prose a {
+    color: #191919;
+    text-decoration: underline;
+    text-decoration-color: #e6e4dd;
+    transition: all 0.2s;
+  }
+  
+  .prose a:hover {
+    color: #d0684f;
+    text-decoration-color: #d0684f;
+  }
+  
   .prose em {
-    @apply italic;
+    font-style: italic;
   }
+  
   .prose blockquote {
-    @apply border-l-4 border-terracotta pl-6 italic text-stone my-6;
+    border-left: 4px solid #d0684f;
+    padding-left: 1.5rem;
+    font-style: italic;
+    color: #666666;
+    margin: 2rem 0;
   }
+  
   .prose code {
-    @apply bg-sand px-2 py-1 rounded text-sm font-mono text-ink;
+    background-color: #f4f3ef;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    font-size: 0.875rem;
+    font-family: 'JetBrains Mono', monospace;
+    color: #191919;
   }
+  
   .prose pre {
-    @apply bg-ink text-sand p-6 rounded-lg overflow-x-auto mb-6;
+    background-color: #191919;
+    color: #f4f3ef;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    overflow-x: auto;
+    margin-bottom: 1.5rem;
   }
+  
   .prose pre code {
-    @apply bg-transparent p-0 text-sand;
+    background-color: transparent;
+    padding: 0;
+    color: #f4f3ef;
   }
-  .prose img {
-    @apply rounded-lg my-8;
-  }
-  .prose hr {
-    @apply border-clay my-12;
+  
+  @media (min-width: 768px) {
+    .prose h2 {
+      font-size: 2.25rem;
+    }
+    
+    .prose h3 {
+      font-size: 1.875rem;
+    }
   }
 </style>
 
