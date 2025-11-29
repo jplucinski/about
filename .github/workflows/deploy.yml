@@ -86,21 +86,17 @@ jobs:
             .env
 
       - name: Create GitHub Release
-        uses: actions/create-release@v1
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: v${{ steps.semver.outputs.new_version }}
-          release_name: Release v${{ steps.semver.outputs.new_version }}
-          body: |
-            ## Changes in this Release
-            - Deployed to production
-            - Build artifacts uploaded to SEOhost via FTP
-            
-            ### Commit Details
-            ${{ github.event.head_commit.message }}
-          draft: false
-          prerelease: false
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release create "v${{ steps.semver.outputs.new_version }}" \
+            --title "Release v${{ steps.semver.outputs.new_version }}" \
+            --notes "## Changes in this Release
+          - Deployed to production
+          - Build artifacts uploaded to SEOhost via FTP
+          
+          ### Commit Details
+          ${{ github.event.head_commit.message }}"
 
       - name: Deployment Summary
         run: |
