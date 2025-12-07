@@ -24,7 +24,7 @@ export default {
         paper: '#f0f4f8',
         ink: '#1e293b', // Slate 800
         sand: '#e2e8f0', // Slate 200
-        terracotta: '#2563eb', // Now a Solid Blue (Primary Accent)
+        terracotta: '#0284c7', // Sky 600 (Matching Glow Effects)
         forest: '#334155', // Slate 700
         clay: '#cbd5e1', // Slate 300
         sage: '#64748b', // Slate 500
