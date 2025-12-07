@@ -1,5 +1,6 @@
 ---
 import Layout from "../components/Layout.astro";
+import PageHero from "../components/PageHero.astro";
 import StructuredData from "../components/StructuredData.astro";
 import { getEntry } from "astro:content";
 
@@ -13,12 +14,9 @@ const siteSettings = (await getEntry("site", "settings").catch(
 const professionalSummary =
   aboutContent?.data?.professionalSummary ||
   "Crafting digital solutions with passion and precision";
-const bioRaw =
-  aboutContent?.data?.bio ||
-  `I'm a Senior Software Developer passionate about creating elegant solutions to complex problems. With expertise in modern web technologies, I focus on building scalable, maintainable applications that deliver exceptional user experiences.
-
-My approach combines technical excellence with a deep understanding of user needs, ensuring that every project I work on is both technically sound and user-friendly.`;
-const bio = bioRaw.split("\n").filter((p: string) => p.trim());
+const bio = (aboutContent?.data?.bio || "")
+  .split("\n")
+  .filter((p: string) => p.trim());
 const frontendSkillsRaw =
   aboutContent?.data?.frontendSkills ||
   `React, Vue, Angular
@@ -46,6 +44,36 @@ const contactText =
 const email = siteSettings?.data?.email || "contact@jplucinski.dev";
 
 const siteUrl = Astro.site?.href || "https://jplucinski.dev";
+const hasBio = bio.length > 0;
+
+const summarizeList = (items: string[], count = 3) =>
+  items.filter(Boolean).slice(0, count).join(", ");
+
+const frontendHighlight = summarizeList(frontendSkills);
+const backendHighlight = summarizeList(backendSkills);
+
+const skillsSummary = backendSkills.length
+  ? `My core expertise lies in ${backendHighlight || "Java ecosystem"}, supported by ${frontendHighlight || "modern frontend tech"} for full-stack delivery.`
+  : null;
+
+const currentRole = experience[0];
+const previousCompanies = experience
+  .slice(1)
+  .map((exp: any) => exp.company)
+  .filter(Boolean);
+
+const experienceSummary = currentRole
+  ? `Currently working as ${currentRole.position} at ${currentRole.company}, keeping ${currentRole.technologies || "our stack"} reliable${
+      previousCompanies.length
+        ? `, after teaming up with ${previousCompanies.join(", ")}`
+        : ""
+    }.`
+  : null;
+
+const educationSummary = education?.trim() ? education : null;
+const languagesSummary = languages?.trim() ? languages : null;
+const hasSnapshot =
+  skillsSummary || experienceSummary || educationSummary || languagesSummary;
 ---
 
 <Layout
@@ -67,126 +95,21 @@ const siteUrl = Astro.site?.href || "https://jplucinski.dev";
       ].filter(Boolean),
     }}
   />
-  <div class="min-h-screen bg-white">
-    <section
-      class="relative min-h-[40vh] md:min-h-[50vh] flex flex-col md:flex-row"
-    >
-      <div
-        class="flex-1 flex items-center justify-center md:justify-end md:pr-8 lg:pr-12 px-6 py-8 md:py-0 border-b md:border-b-0 md:border-r border-clay"
-      >
-        <div class="max-w-md">
-          <h1 class="heading-display text-left mb-2">
-            <span class="block">About</span>
-            <span class="block">Me</span>
-          </h1>
-        </div>
-      </div>
-
-      <div
-        class="flex-1 flex items-center justify-center md:justify-start md:pl-8 lg:pl-12 px-6 py-8 md:py-0"
-      >
-        <div class="max-w-md">
-          <p
-            class="text-lg md:text-xl lg:text-2xl text-charcoal leading-relaxed font-light"
-          >
-            {professionalSummary}
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <section class="container mx-auto px-6 py-12 md:py-16">
-      <div class="max-w-4xl mx-auto">
-        <div class="space-y-4 md:space-y-6">
-          {
-            bio.map((paragraph: string, index: number) => (
-              <p class="text-base md:text-lg lg:text-xl text-charcoal leading-relaxed font-light">
-                {paragraph}
-              </p>
-            ))
-          }
-        </div>
-      </div>
-    </section>
-
-    <section
-      class="container mx-auto px-6 py-12 md:py-16 border-t border-clay"
-    >
-      <div class="max-w-6xl mx-auto">
-        <h2 class="heading-2 mb-8 md:mb-10 text-center">Skills & Expertise</h2>
-
-        <div class="grid md:grid-cols-2 gap-8 md:gap-10">
-          <div>
-            <h3
-              class="text-lg md:text-xl font-display font-semibold mb-4 text-ink"
-            >
-              Frontend
-            </h3>
-            <ul class="space-y-2">
-              {
-                frontendSkills.map((skill: string, index: number) => (
-                  <li class="text-sm md:text-base text-stone font-light border-b border-clay pb-2 last:border-0">
-                    {skill}
-                  </li>
-                ))
-              }
-            </ul>
-          </div>
-
-          <div>
-            <h3
-              class="text-lg md:text-xl font-display font-semibold mb-4 text-ink"
-            >
-              Backend
-            </h3>
-            <ul class="space-y-2">
-              {
-                backendSkills.map((skill: string, index: number) => (
-                  <li class="text-sm md:text-base text-stone font-light border-b border-clay pb-2 last:border-0">
-                    {skill}
-                  </li>
-                ))
-              }
-            </ul>
-          </div>
-        </div>
-      </div>
-    </section>
+  <div class="min-h-screen">
+    <PageHero
+      title={`<span class="block">About</span><span class="block text-terracotta">Me</span>`}
+      description={professionalSummary}
+    />
 
     {
-      experience.length > 0 && (
-        <section class="container mx-auto px-6 py-12 md:py-16 border-t border-clay">
+      hasBio && (
+        <section class="container mx-auto px-6 py-12 md:py-16">
           <div class="max-w-4xl mx-auto">
-            <h2 class="heading-2 mb-8 md:mb-10 text-center">Experience</h2>
-
-            <div class="space-y-6 md:space-y-8">
-              {experience.map((exp: any, index: number) => (
-                <div class="border-l-2 border-clay pl-6 md:pl-8">
-                  <div class="mb-2">
-                    <span class="text-xs md:text-sm text-stone font-light">
-                      {exp.period}
-                    </span>
-                  </div>
-                  <h3 class="text-lg md:text-xl font-display font-semibold mb-1 text-ink">
-                    {exp.position}
-                  </h3>
-                  <p class="text-base md:text-lg text-charcoal mb-2 font-light">
-                    {exp.company}
-                    {exp.technologies && (
-                      <span class="text-stone"> • {exp.technologies}</span>
-                    )}
-                  </p>
-                  <ul class="space-y-1">
-                    {exp.responsibilities.map(
-                      (resp: string, respIndex: number) => (
-                        <li class="text-sm md:text-base text-stone font-light flex items-start">
-                          <span class="text-stone mr-2 mt-1">•</span>
-                          <span>{resp}</span>
-                        </li>
-                      ),
-                    )}
-                  </ul>
-                </div>
+            <div class="space-y-4 md:space-y-6">
+              {bio.map((paragraph: string) => (
+                <p class="text-base md:text-lg lg:text-xl text-charcoal leading-relaxed font-light">
+                  {paragraph}
+                </p>
               ))}
             </div>
           </div>
@@ -195,29 +118,65 @@ const siteUrl = Astro.site?.href || "https://jplucinski.dev";
     }
 
     {
-      (education || languages) && (
+      hasSnapshot && (
         <section class="container mx-auto px-6 py-12 md:py-16 border-t border-clay">
-          <div class="max-w-4xl mx-auto">
-            <div class="grid md:grid-cols-2 gap-8 md:gap-10">
-              {education && (
-                <div>
-                  <h3 class="text-lg md:text-xl font-display font-semibold mb-4 text-ink">
-                    Education
-                  </h3>
-                  <p class="text-sm md:text-base text-stone font-light leading-relaxed">
-                    {education}
-                  </p>
+          <div class="max-w-5xl mx-auto">
+            <h2 class="heading-2 mb-8 md:mb-12 text-center">Snapshot</h2>
+            <div class="space-y-8">
+              {skillsSummary && (
+                <div class="flex flex-col md:flex-row gap-4 md:gap-8 border-b border-clay/30 pb-8 last:border-0">
+                  <div class="md:w-32 flex-shrink-0">
+                    <p class="text-xs font-medium uppercase tracking-[0.2em] text-terracotta">
+                      Core Stack
+                    </p>
+                  </div>
+                  <div class="flex-1">
+                    <p class="text-base md:text-lg text-charcoal leading-relaxed font-light">
+                      {skillsSummary}
+                    </p>
+                  </div>
                 </div>
               )}
-
-              {languages && (
-                <div>
-                  <h3 class="text-lg md:text-xl font-display font-semibold mb-4 text-ink">
-                    Languages
-                  </h3>
-                  <p class="text-sm md:text-base text-stone font-light leading-relaxed">
-                    {languages}
-                  </p>
+              {experienceSummary && (
+                <div class="flex flex-col md:flex-row gap-4 md:gap-8 border-b border-clay/30 pb-8 last:border-0">
+                  <div class="md:w-32 flex-shrink-0">
+                    <p class="text-xs font-medium uppercase tracking-[0.2em] text-terracotta">
+                      Experience
+                    </p>
+                  </div>
+                  <div class="flex-1">
+                    <p class="text-base md:text-lg text-charcoal leading-relaxed font-light">
+                      {experienceSummary}
+                    </p>
+                  </div>
+                </div>
+              )}
+              {educationSummary && (
+                <div class="flex flex-col md:flex-row gap-4 md:gap-8 border-b border-clay/30 pb-8 last:border-0">
+                  <div class="md:w-32 flex-shrink-0">
+                    <p class="text-xs font-medium uppercase tracking-[0.2em] text-terracotta">
+                      Education
+                    </p>
+                  </div>
+                  <div class="flex-1">
+                    <p class="text-base md:text-lg text-charcoal leading-relaxed font-light">
+                      {educationSummary}
+                    </p>
+                  </div>
+                </div>
+              )}
+              {languagesSummary && (
+                <div class="flex flex-col md:flex-row gap-4 md:gap-8 border-b border-clay/30 pb-8 last:border-0">
+                  <div class="md:w-32 flex-shrink-0">
+                    <p class="text-xs font-medium uppercase tracking-[0.2em] text-terracotta">
+                      Languages
+                    </p>
+                  </div>
+                  <div class="flex-1">
+                    <p class="text-base md:text-lg text-charcoal leading-relaxed font-light">
+                      {languagesSummary}
+                    </p>
+                  </div>
                 </div>
               )}
             </div>
@@ -226,9 +185,7 @@ const siteUrl = Astro.site?.href || "https://jplucinski.dev";
       )
     }
 
-    <section
-      class="container mx-auto px-6 py-12 md:py-16 border-t border-clay"
-    >
+    <section class="container mx-auto px-6 py-12 md:py-16 border-t border-clay">
       <div class="max-w-2xl mx-auto text-center">
         <h2 class="heading-2 mb-2 text-ink">Get in Touch</h2>
         <p
@@ -295,7 +252,7 @@ const siteUrl = Astro.site?.href || "https://jplucinski.dev";
                   viewBox="0 0 24 24"
                   aria-hidden="true"
                 >
-                  <path d="M13.5445 10.7358L22.0011 1H20.0698L12.6317 9.41915L6.69481 1H0L8.89425 13.5969L0 23.8848H1.93135L9.80654 14.9632L16.0889 23.8848H22.7837L13.5445 10.7358ZM10.8088 13.7969L9.92446 12.5764L2.60044 2.45896H5.76132L11.7827 10.6839L12.667 11.9044L20.0698 22.5026H16.909L10.8088 13.7969Z"/>
+                  <path d="M13.5445 10.7358L22.0011 1H20.0698L12.6317 9.41915L6.69481 1H0L8.89425 13.5969L0 23.8848H1.93135L9.80654 14.9632L16.0889 23.8848H22.7837L13.5445 10.7358ZM10.8088 13.7969L9.92446 12.5764L2.60044 2.45896H5.76132L11.7827 10.6839L12.667 11.9044L20.0698 22.5026H16.909L10.8088 13.7969Z" />
                 </svg>
                 Medium
               </a>

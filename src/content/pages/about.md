@@ -1,27 +1,15 @@
 ---
 title: About
-professionalSummary: I'm a Senior Java Developer with over a decade of experience in automotive, fintech, and game development. Skilled in designing scalable systems, optimizing performance, and leading teams.
-bio: >
-  I excel at turning complex challenges into simple, effective solutions and have a strong passion for mentoring and innovation. With extensive experience across multiple industries, I bring a unique perspective to every project I work on.
-
-
-  My expertise spans from developing globally available REST APIs to designing microservices architectures for cloud stacks. I'm proactive in agile scrum delivery and enjoy collaborating with engineering teams to design and launch new features.
-
-
-  As an AI early adopter and GitHub Copilot Champion, I stay at the forefront of technology trends while maintaining a focus on clean, maintainable code and best practices.
+professionalSummary: Hey, I'm Jędrzej — a senior Java dev who loves smoothing out gnarly backend flows, mentoring teams, and shipping reliable features for fintech, automotive, and creative studios.
+bio: ""
 frontendSkills: |
-  JavaScript / TypeScript
-  React, NextJS
-  Angular Framework
-  Frontend Development Support
+  Modern JS Frameworks (React, Astro)
+  TypeScript & Tailwind CSS
 backendSkills: |
-  Java, Spring, JPA
-  Microservices Architecture
-  REST, SOAP APIs
-  Event-Driven Systems (JMS, Kafka)
-  RDBMS, SQL, NoSQL
-  DevOps, CI/CD Pipelines
-  Cloud Infrastructure (AWS, Azure)
+  Java, Spring Boot, JPA/Hibernate
+  Microservices & Event-Driven (Kafka, JMS)
+  Cloud (AWS, Azure), Docker, K8s
+  SQL (Postgres, Oracle) & NoSQL (MongoDB)
 experience:
   - period: "02.2022 - Present"
     company: "BNY"

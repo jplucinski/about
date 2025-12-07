@@ -21,15 +21,16 @@ export default {
           800: '#191919', // Ink Black
           900: '#000000',
         },
-        paper: '#fdfcf8',
-        ink: '#191919',
-        sand: '#f4f3ef',
-        terracotta: '#d0684f',
-        forest: '#2d3b3b',
-        clay: '#e6e4dd',
-        sage: '#8fa398',
-        stone: '#666666',
-        charcoal: '#333333',
+        paper: '#f0f4f8',
+        ink: '#1e293b', // Slate 800
+        sand: '#e2e8f0', // Slate 200
+        terracotta: '#2563eb', // Now a Solid Blue (Primary Accent)
+        forest: '#334155', // Slate 700
+        clay: '#cbd5e1', // Slate 300
+        sage: '#64748b', // Slate 500
+        stone: '#475569', // Slate 600
+        charcoal: '#1e293b', // Slate 800
+        ice: '#f0f4f8', // New Light Blue-Gray Background
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',

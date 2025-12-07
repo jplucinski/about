@@ -17,20 +17,21 @@ const isActive = (href: string) => {
 ---
 
 <header
-  class="sticky top-0 z-50 border-b border-clay bg-white backdrop-blur-md transition-all duration-300"
+  class="sticky top-0 z-50 border-b border-clay bg-ice/80 backdrop-blur-md transition-all duration-300"
 >
   <div class="container mx-auto px-6 py-4 md:py-5">
     <div class="flex items-center justify-between">
       <div class="flex items-center gap-3">
-        <a
-          href="/"
-          class="group flex items-center gap-3"
-        >
+        <a href="/" class="group flex items-center gap-3">
           <div class="flex flex-col">
-            <span class="text-sm font-mono uppercase tracking-[0.25em] text-ink font-semibold group-hover:text-terracotta transition-colors">
+            <span
+              class="text-sm font-mono uppercase tracking-[0.25em] text-ink font-semibold group-hover:text-terracotta transition-colors"
+            >
               calm software
             </span>
-            <span class="text-[10px] font-mono uppercase tracking-[0.3em] text-stone -mt-0.5">
+            <span
+              class="text-[10px] font-mono uppercase tracking-[0.3em] text-stone -mt-0.5"
+            >
               direction
             </span>
           </div>
@@ -49,13 +50,13 @@ const isActive = (href: string) => {
                       href={item.href}
                       aria-current={active ? "page" : undefined}
                       class={`relative text-sm font-medium tracking-wide transition-all duration-200 group ${
-                        active
-                          ? "text-ink"
-                          : "text-stone hover:text-ink"
+                        active ? "text-ink" : "text-stone hover:text-ink"
                       }`}
                     >
                       <span class="relative z-10">{item.label}</span>
-                      <span class={`absolute bottom-0 left-0 w-full h-0.5 bg-terracotta transition-transform duration-300 ${active ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'}`}></span>
+                      <span
+                        class={`absolute bottom-0 left-0 w-full h-0.5 bg-terracotta transition-transform duration-300 ${active ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"}`}
+                      />
                     </a>
                   </li>
                 );
@@ -63,12 +64,20 @@ const isActive = (href: string) => {
             }
           </ul>
         </nav>
-        
+
         <div class="flex items-center gap-2 px-3 py-1.5 bg-sand rounded-full">
-          <svg class="w-3 h-3 text-terracotta" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+          <svg
+            class="w-3 h-3 text-terracotta"
+            fill="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"
+            ></path>
           </svg>
-          <span class="text-[10px] font-mono uppercase tracking-wider text-stone">
+          <span
+            class="text-[10px] font-mono uppercase tracking-wider text-stone"
+          >
             Poznań · Remote
           </span>
         </div>
@@ -81,9 +90,12 @@ const isActive = (href: string) => {
         aria-expanded="false"
         aria-controls="primary-mobile-menu"
       >
-        <span class="w-6 h-0.5 bg-ink transition-all group-hover:bg-terracotta"></span>
-        <span class="w-6 h-0.5 bg-ink transition-all group-hover:bg-terracotta"></span>
-        <span class="w-6 h-0.5 bg-ink transition-all group-hover:bg-terracotta"></span>
+        <span class="w-6 h-0.5 bg-ink transition-all group-hover:bg-terracotta"
+        ></span>
+        <span class="w-6 h-0.5 bg-ink transition-all group-hover:bg-terracotta"
+        ></span>
+        <span class="w-6 h-0.5 bg-ink transition-all group-hover:bg-terracotta"
+        ></span>
       </button>
     </div>
 
@@ -110,8 +122,14 @@ const isActive = (href: string) => {
           }
         </ul>
         <div class="mt-6 pt-4 border-t border-clay flex items-center gap-2">
-          <svg class="w-3 h-3 text-terracotta" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+          <svg
+            class="w-3 h-3 text-terracotta"
+            fill="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"
+            ></path>
           </svg>
           <span class="text-xs font-mono uppercase tracking-wider text-stone">
             Poznań · Remote
