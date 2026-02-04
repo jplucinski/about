@@ -11,7 +11,15 @@ backendSkills: |
   Cloud (AWS, Azure), Docker, K8s
   SQL (Postgres, Oracle) & NoSQL (MongoDB)
 experience:
-  - period: "02.2022 - Present"
+  - period: "02.2025 - Present"
+    company: "Viator"
+    position: "Senior Backend Developer"
+    technologies: "Java"
+    responsibilities:
+      - "Developing REST API microservices for travel platform"
+      - "Building scalable backend systems for global travel marketplace"
+      - "Collaborating with cross-functional teams to deliver high-quality features"
+  - period: "02.2022 - 01.2025"
     company: "BNY"
     position: "Senior Backend Developer"
     technologies: "Java"
