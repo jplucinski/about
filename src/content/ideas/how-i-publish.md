@@ -20,7 +20,7 @@ My publishing process is intentionally simple, leveraging automation and AI assi
 
 ### 1. Capture the Idea
 
-When inspiration strikes, I write my thoughts on platforms like **Medium** or **Synstack**. These platforms are great for drafting and initial feedback, but I want my content to live on my own domain.
+When inspiration strikes, I write my thoughts on platforms like **Medium** or **Substack**. These platforms are great for drafting and initial feedback, but I want my content to live on my own domain.
 
 ### 2. Create a GitHub Issue
 
@@ -66,7 +66,7 @@ This workflow strikes a balance between flexibility and automation:
 
 ## Tools Involved
 
-- **Medium/Synstack**: Initial drafting and writing
+- **Medium/Substack**: Initial drafting and writing
 - **GitHub Issues**: Task tracking and content pipeline
 - **GitHub Copilot**: AI-assisted content transformation
 - **Astro**: Static site generation
