@@ -44,7 +44,7 @@ The project is open source and built with a modern web stack:
 
 ## Check It Out
 
-You can use the tool for free at [labelsqueeze.org](https://www.labelsqueeze.org/).
+You can use the tool for free at [labelsqueeze.org](https://labelsqueeze.jplucinski.dev/).
 
 The code is available on GitHub if you're interested in how it works or want to contribute:
-[github.com/jplucinski/Label-Squeeze](https://github.com/jplucinski/Label-Squeeze)
+[github.com/jplucinski/Label-Squeeze](https://github.com/jplucinski/label-squeeze)
