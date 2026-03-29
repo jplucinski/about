@@ -10,7 +10,7 @@ seo:
   description: "Label Squeeze is a free, secure, client-side tool to combine A6 shipping labels into A4 pages for efficient printing."
 ---
 
-I recently launched [Label Squeeze](https://www.labelsqueeze.org/), a browser-based tool designed to help e-commerce businesses and individuals save paper by efficiently merging multiple A6 shipping labels into A4 pages.
+I recently launched [Label Squeeze](https://labelsqueeze.jplucinski.dev/), a browser-based tool designed to help e-commerce businesses and individuals save paper by efficiently merging multiple A6 shipping labels into A4 pages.
 
 ## The Problem
 
